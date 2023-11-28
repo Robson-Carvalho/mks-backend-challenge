@@ -10,12 +10,15 @@ import {
   HttpStatus,
   NotFoundException,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
 import { ResponseCreateUserDto } from './dto/response-create-user.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { hash } from 'bcrypt';
 
 @Controller('api/v1/users')
 export class UsersController {
@@ -29,7 +32,12 @@ export class UsersController {
       throw new BadRequestException('Invalid Credentials', 'BadRequest');
     }
 
-    const userCreated = await this.usersService.create(user);
+    const hashPassword = await hash(user.password, 10);
+
+    const userCreated = await this.usersService.create({
+      ...user,
+      password: hashPassword,
+    });
 
     const responseDto: ResponseCreateUserDto = {
       id: userCreated.id.toString(),
@@ -47,11 +55,13 @@ export class UsersController {
     return responseDto;
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(): Promise<User[]> {
     return await this.usersService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<User> {
     try {
@@ -64,6 +74,7 @@ export class UsersController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -79,6 +90,7 @@ export class UsersController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@Param('id') id: string): Promise<void> {
