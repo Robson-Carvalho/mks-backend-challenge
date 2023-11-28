@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, Matches } from 'class-validator';
-import { MessagesHelper } from 'src/helpers/message.helper';
 import { RegExHelper } from 'src/helpers/regex.helper';
 
 export class CreateUserDto {
@@ -21,7 +20,8 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @Matches(RegExHelper.password, {
-    message: MessagesHelper.PASSWORD_VALID,
+    message:
+      'A senha precisa de números, letras maiúsculas, minúscilas e caracteres especiais',
   })
   @ApiProperty({
     description: 'Senha do usuário',
