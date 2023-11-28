@@ -97,6 +97,7 @@ $ npm run test:cov
 - Swagger: [6 meses]
 - Docker: [3 meses]
 - PostgreSQL: [1 ano]
+- Redis: [0 meses]
 
 ## Documentação
 
