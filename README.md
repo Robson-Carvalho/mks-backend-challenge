@@ -39,9 +39,7 @@ $ npm run start:prod
 ## Running the app with Docker
 
 ```bash
-# generate database container
-$ docker compose up -d db
-# generate or update project docker image
+# generate project docker image
 $ docker compose build
 # run nestjs project and database
 $ docker compose up
