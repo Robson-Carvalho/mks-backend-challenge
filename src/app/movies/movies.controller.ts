@@ -8,14 +8,16 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { Movie } from './movie.entity';
+import { Movie } from './schema/movie.entity';
 import { MoviesService } from './movies.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
 @Controller('api/v1/movies')
+@ApiTags('Movies')
 export class MoviesController {
   constructor(private readonly movieService: MoviesService) {}
 

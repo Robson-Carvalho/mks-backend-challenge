@@ -1,12 +1,25 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class UpdateMovieDto {
   @IsNotEmpty()
-  title: string;
+  @ApiProperty({
+    description: 'Título do filme',
+    type: String,
+  })
+  readonly title: string;
 
   @IsNotEmpty()
-  description?: string;
+  @ApiProperty({
+    description: 'Descrição do filme',
+    type: String,
+  })
+  readonly description?: string;
 
   @IsNotEmpty()
-  year?: number;
+  @ApiProperty({
+    description: 'Ano do filme',
+    type: Number,
+  })
+  readonly year?: number;
 }

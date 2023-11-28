@@ -15,12 +15,14 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './user.entity';
+import { User } from './schema/user.entity';
 import { ResponseCreateUserDto } from './dto/response-create-user.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { hash } from 'bcrypt';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('api/v1/users')
+@ApiTags('Users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
